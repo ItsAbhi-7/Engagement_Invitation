@@ -18,7 +18,7 @@ export const defaultInvitation: InvitationContent = {
     tagline: "We're getting engaged",
   },
   welcomeMessage:
-    'We are honored to welcome you to the Engagement ceremony of Abhilash & Riya. As they begin their journey together in faith and love, we thank you for being part of this blessed occasion 💚',
+    'With hearts full of joy and gratitude, we warmly invite you to celebrate the engagement ceremony of **Abhilash & Riya**. As they take the first beautiful step towards a lifetime of love, togetherness, and cherished memories, your presence and blessings will make this special occasion even more meaningful. 💚',
   eventDate: '2026-12-20T10:30:00',
   events: [
     {
