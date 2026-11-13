@@ -19,8 +19,8 @@ function emptyInvitation(): InvitationContent {
     published: true,
     couple: {
       ...structuredClone(defaultInvitation.couple),
-      partner1: { name: '', parents: '', titles: '' },
-      partner2: { name: '', parents: '', titles: '' },
+      partner1: { name: '', parents: '' },
+      partner2: { name: '', parents: '' },
     },
     photos: [],
   }
@@ -235,15 +235,6 @@ export function AdminEditor() {
             }
           />
           <Field
-            label="Partner 1 titles"
-            value={form.couple.partner1.titles}
-            onChange={(titles) =>
-              update({
-                couple: { ...form.couple, partner1: { ...form.couple.partner1, titles } },
-              })
-            }
-          />
-          <Field
             label="Partner 2 name"
             value={form.couple.partner2.name}
             onChange={(name) =>
@@ -256,15 +247,6 @@ export function AdminEditor() {
             onChange={(parents) =>
               update({
                 couple: { ...form.couple, partner2: { ...form.couple.partner2, parents } },
-              })
-            }
-          />
-          <Field
-            label="Partner 2 titles"
-            value={form.couple.partner2.titles}
-            onChange={(titles) =>
-              update({
-                couple: { ...form.couple, partner2: { ...form.couple.partner2, titles } },
               })
             }
           />
@@ -298,32 +280,6 @@ export function AdminEditor() {
             value={form.venue.address}
             onChange={(address) => update({ venue: { ...form.venue, address } })}
           />
-          <div className="grid grid-cols-2 gap-2">
-            <label className="block font-sans text-xs font-medium text-charcoal">
-              Latitude
-              <input
-                type="number"
-                step="any"
-                value={form.venue.lat}
-                onChange={(e) =>
-                  update({ venue: { ...form.venue, lat: Number(e.target.value) } })
-                }
-                className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm"
-              />
-            </label>
-            <label className="block font-sans text-xs font-medium text-charcoal">
-              Longitude
-              <input
-                type="number"
-                step="any"
-                value={form.venue.lng}
-                onChange={(e) =>
-                  update({ venue: { ...form.venue, lng: Number(e.target.value) } })
-                }
-                className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm"
-              />
-            </label>
-          </div>
         </section>
 
         <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
@@ -372,28 +328,6 @@ export function AdminEditor() {
           </label>
         </section>
 
-        <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
-          <h2 className="font-serif text-lg">RSVP</h2>
-          <label className="flex items-center gap-2 font-sans text-sm">
-            <input
-              type="checkbox"
-              checked={form.rsvp.enabled}
-              onChange={(e) => update({ rsvp: { ...form.rsvp, enabled: e.target.checked } })}
-            />
-            Enable RSVP
-          </label>
-          <Field
-            label="WhatsApp number (with country code)"
-            value={form.rsvp.whatsappNumber}
-            onChange={(whatsappNumber) => update({ rsvp: { ...form.rsvp, whatsappNumber } })}
-          />
-          <Field
-            label="Share message"
-            value={form.shareMessage}
-            onChange={(shareMessage) => update({ shareMessage })}
-            multiline
-          />
-        </section>
       </div>
     </div>
   )

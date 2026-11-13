@@ -41,12 +41,10 @@ export function normalizeInvitation(raw: unknown): InvitationContent {
       partner1: {
         name: asText(p1.name),
         parents: asText(p1.parents),
-        titles: asText(p1.titles),
       },
       partner2: {
         name: asText(p2.name),
         parents: asText(p2.parents),
-        titles: asText(p2.titles),
       },
       tagline: asText(couple.tagline, defaultInvitation.couple.tagline),
     },

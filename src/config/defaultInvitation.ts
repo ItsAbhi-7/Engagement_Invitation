@@ -10,12 +10,10 @@ export const defaultInvitation: InvitationContent = {
     partner1: {
       name: 'Abhilash',
       parents: 'Son of Mr.Hari Kumar Nair & Mrs.Jaishree Nair',
-      titles: 'B.E., M.S. / Data Scientist',
     },
     partner2: {
       name: 'Riya',
       parents: 'Daughter of Mr.P N Muraleedharan & Mrs. Kushala Muraleedharan',
-      titles: 'MBBS, M.D / Pediatrician',
     },
     tagline: "We're getting engaged",
   },
@@ -64,8 +62,6 @@ export const defaultInvitation: InvitationContent = {
     city: 'Jabalpur, MP',
     lat: 23.148060509315115,
     lng: 79.93423250236579,
-    mapEmbedUrl:
-      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2482.9!2d-0.1278!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDMwJzI2LjYiTiAwwrAwNyc0MC4xIlc!5e0!3m2!1sen!2suk!4v1',
   },
   photos: [
     'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
@@ -82,10 +78,8 @@ export const defaultInvitation: InvitationContent = {
   },
   countdownTitle: 'Counting Down to Forever',
   rsvp: {
-    enabled: true,
-    whatsappNumber: '447700900000',
-    deadline: '2026-11-15',
+    enabled: false,
+    whatsappNumber: '',
   },
-  shareMessage:
-    "You're invited to celebrate Abhilash & Riya's engagement! Open the invitation:",
+  shareMessage: "You're invited to celebrate Abhilash & Riya's engagement!",
 }

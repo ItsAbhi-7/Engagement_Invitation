@@ -25,13 +25,11 @@ export function CoupleHero({ invitation }: { invitation: InvitationContent }) {
 
           <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{partner1.name}</h1>
           <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">{partner1.parents}</p>
-          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">{partner1.titles}</p>
 
           <span className="my-3 font-script text-3xl text-charcoal/60">&</span>
 
           <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{partner2.name}</h1>
           <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">{partner2.parents}</p>
-          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">{partner2.titles}</p>
         </motion.div>
       </div>
 

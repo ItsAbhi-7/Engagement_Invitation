@@ -9,7 +9,6 @@ import { Countdown } from '@/components/sections/Countdown'
 import { ProgramTimeline } from '@/components/sections/ProgramTimeline'
 import { ScratchReveal } from '@/components/sections/ScratchReveal'
 import { VenueSection } from '@/components/sections/VenueSection'
-import { RsvpSection } from '@/components/sections/RsvpSection'
 import { MusicToggle } from '@/components/ui/MusicToggle'
 import { MusicProvider, useMusic } from '@/contexts/MusicContext'
 import type { InvitationContent } from '@/types/invitation'
@@ -68,7 +67,6 @@ function InvitationInner({ invitation }: { invitation: InvitationContent }) {
             <ProgramTimeline invitation={invitation} />
             <ScratchReveal invitation={invitation} />
             <VenueSection invitation={invitation} />
-            <RsvpSection invitation={invitation} />
             <footer className="pb-20 pt-4 text-center font-serif text-xs text-taupe/50">
               {invitation.couple.partner1.name} & {invitation.couple.partner2.name} ·{' '}
               {new Date(invitation.eventDate).getFullYear()}

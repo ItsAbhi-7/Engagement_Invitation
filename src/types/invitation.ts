@@ -1,7 +1,6 @@
 export interface CouplePerson {
   name: string
   parents: string
-  titles: string
 }
 
 export interface EventItem {
