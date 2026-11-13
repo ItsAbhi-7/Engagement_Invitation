@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-- Invitation: [http://localhost:5173/i/zayn-nora](http://localhost:5173/i/zayn-nora)
+- Invitation (opens on TAP TO OPEN): [http://localhost:5173/](http://localhost:5173/)
 - Admin: [http://localhost:5173/admin](http://localhost:5173/admin) — PIN: `admin`
 
 ## How to edit
