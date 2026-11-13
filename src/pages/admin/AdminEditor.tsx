@@ -9,66 +9,54 @@ import {
   uploadImage,
   upsertInvitation,
 } from '@/lib/invitations'
-import type { InvitationContent, LocalizedString } from '@/types/invitation'
+import type { InvitationContent } from '@/types/invitation'
 
 function emptyInvitation(): InvitationContent {
   return {
     ...structuredClone(defaultInvitation),
     id: 'new',
     slug: `invite-${Date.now().toString(36)}`,
-    published: false,
+    published: true,
     couple: {
       ...structuredClone(defaultInvitation.couple),
-      partner1: {
-        name: { en: '', ar: '' },
-        parents: { en: '', ar: '' },
-        titles: { en: '', ar: '' },
-      },
-      partner2: {
-        name: { en: '', ar: '' },
-        parents: { en: '', ar: '' },
-        titles: { en: '', ar: '' },
-      },
+      partner1: { name: '', parents: '', titles: '' },
+      partner2: { name: '', parents: '', titles: '' },
     },
     photos: [],
   }
 }
 
-function LocalizedFields({
+function Field({
   label,
   value,
   onChange,
   multiline,
 }: {
   label: string
-  value: LocalizedString
-  onChange: (v: LocalizedString) => void
+  value: string
+  onChange: (v: string) => void
   multiline?: boolean
 }) {
-  const Field = multiline ? 'textarea' : 'input'
+  const shared =
+    'w-full rounded-xl border border-charcoal/10 px-3 py-2 font-sans text-sm outline-none focus:border-sage'
   return (
-    <div className="space-y-2">
-      <p className="font-sans text-xs font-medium text-charcoal">{label}</p>
-      <Field
-        value={value.en}
-        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-          onChange({ ...value, en: e.target.value })
-        }
-        placeholder={`${label} (English)`}
-        rows={multiline ? 3 : undefined}
-        className="w-full rounded-xl border border-charcoal/10 px-3 py-2 font-sans text-sm outline-none focus:border-sage"
-      />
-      <Field
-        value={value.ar}
-        onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-          onChange({ ...value, ar: e.target.value })
-        }
-        placeholder={`${label} (Arabic)`}
-        dir="rtl"
-        rows={multiline ? 3 : undefined}
-        className="w-full rounded-xl border border-charcoal/10 px-3 py-2 font-sans text-sm outline-none focus:border-sage"
-      />
-    </div>
+    <label className="block space-y-1 font-sans text-xs font-medium text-charcoal">
+      {label}
+      {multiline ? (
+        <textarea
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          rows={3}
+          className={shared}
+        />
+      ) : (
+        <input
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={shared}
+        />
+      )}
+    </label>
   )
 }
 
@@ -149,7 +137,6 @@ export function AdminEditor() {
         >
           Back to editor
         </button>
-        {/* Lazy import avoided — reuse experience */}
         <InvitationExperience invitation={form} />
       </div>
     )
@@ -195,7 +182,7 @@ export function AdminEditor() {
 
         <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
           <h2 className="font-serif text-lg">Basics</h2>
-          <label className="block font-sans text-xs">
+          <label className="block font-sans text-xs font-medium text-charcoal">
             URL slug
             <input
               value={form.slug}
@@ -208,7 +195,7 @@ export function AdminEditor() {
           <p className="font-sans text-[11px] text-taupe">
             Shareable URL: <code>/i/{form.slug}</code>
           </p>
-          <label className="block font-sans text-xs">
+          <label className="block font-sans text-xs font-medium text-charcoal">
             Event date & time
             <input
               type="datetime-local"
@@ -217,31 +204,28 @@ export function AdminEditor() {
               className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm outline-none focus:border-sage"
             />
           </label>
-          <label className="block font-sans text-xs">
-            Music URL
-            <input
-              value={form.musicUrl}
-              onChange={(e) => update({ musicUrl: e.target.value })}
-              className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm outline-none focus:border-sage"
-            />
-          </label>
+          <Field
+            label="Music URL"
+            value={form.musicUrl}
+            onChange={(musicUrl) => update({ musicUrl })}
+          />
         </section>
 
-        <section className="space-y-4 rounded-2xl border border-charcoal/10 bg-white p-4">
+        <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
           <h2 className="font-serif text-lg">Couple</h2>
-          <LocalizedFields
+          <Field
             label="Tagline"
             value={form.couple.tagline}
             onChange={(tagline) => update({ couple: { ...form.couple, tagline } })}
           />
-          <LocalizedFields
+          <Field
             label="Partner 1 name"
             value={form.couple.partner1.name}
             onChange={(name) =>
               update({ couple: { ...form.couple, partner1: { ...form.couple.partner1, name } } })
             }
           />
-          <LocalizedFields
+          <Field
             label="Partner 1 parents"
             value={form.couple.partner1.parents}
             onChange={(parents) =>
@@ -250,7 +234,7 @@ export function AdminEditor() {
               })
             }
           />
-          <LocalizedFields
+          <Field
             label="Partner 1 titles"
             value={form.couple.partner1.titles}
             onChange={(titles) =>
@@ -259,14 +243,14 @@ export function AdminEditor() {
               })
             }
           />
-          <LocalizedFields
+          <Field
             label="Partner 2 name"
             value={form.couple.partner2.name}
             onChange={(name) =>
               update({ couple: { ...form.couple, partner2: { ...form.couple.partner2, name } } })
             }
           />
-          <LocalizedFields
+          <Field
             label="Partner 2 parents"
             value={form.couple.partner2.parents}
             onChange={(parents) =>
@@ -275,7 +259,7 @@ export function AdminEditor() {
               })
             }
           />
-          <LocalizedFields
+          <Field
             label="Partner 2 titles"
             value={form.couple.partner2.titles}
             onChange={(titles) =>
@@ -288,34 +272,34 @@ export function AdminEditor() {
 
         <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
           <h2 className="font-serif text-lg">Messages & venue</h2>
-          <LocalizedFields
+          <Field
             label="Welcome message"
             value={form.welcomeMessage}
             onChange={(welcomeMessage) => update({ welcomeMessage })}
             multiline
           />
-          <LocalizedFields
+          <Field
             label="Countdown title"
             value={form.countdownTitle}
             onChange={(countdownTitle) => update({ countdownTitle })}
           />
-          <LocalizedFields
+          <Field
             label="Venue name"
             value={form.venue.name}
             onChange={(name) => update({ venue: { ...form.venue, name } })}
           />
-          <LocalizedFields
+          <Field
             label="Venue city"
             value={form.venue.city}
             onChange={(city) => update({ venue: { ...form.venue, city } })}
           />
-          <LocalizedFields
+          <Field
             label="Venue address"
             value={form.venue.address}
             onChange={(address) => update({ venue: { ...form.venue, address } })}
           />
           <div className="grid grid-cols-2 gap-2">
-            <label className="block font-sans text-xs">
+            <label className="block font-sans text-xs font-medium text-charcoal">
               Latitude
               <input
                 type="number"
@@ -327,7 +311,7 @@ export function AdminEditor() {
                 className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm"
               />
             </label>
-            <label className="block font-sans text-xs">
+            <label className="block font-sans text-xs font-medium text-charcoal">
               Longitude
               <input
                 type="number"
@@ -344,22 +328,22 @@ export function AdminEditor() {
 
         <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
           <h2 className="font-serif text-lg">Scratch reveal</h2>
-          <LocalizedFields
+          <Field
             label="Title"
             value={form.scratch.title}
             onChange={(title) => update({ scratch: { ...form.scratch, title } })}
           />
-          <LocalizedFields
+          <Field
             label="Date label"
             value={form.scratch.dateLabel}
             onChange={(dateLabel) => update({ scratch: { ...form.scratch, dateLabel } })}
           />
-          <LocalizedFields
+          <Field
             label="Day label"
             value={form.scratch.dayLabel}
             onChange={(dayLabel) => update({ scratch: { ...form.scratch, dayLabel } })}
           />
-          <LocalizedFields
+          <Field
             label="Time label"
             value={form.scratch.timeLabel}
             onChange={(timeLabel) => update({ scratch: { ...form.scratch, timeLabel } })}
@@ -398,15 +382,12 @@ export function AdminEditor() {
             />
             Enable RSVP
           </label>
-          <label className="block font-sans text-xs">
-            WhatsApp number (with country code)
-            <input
-              value={form.rsvp.whatsappNumber}
-              onChange={(e) => update({ rsvp: { ...form.rsvp, whatsappNumber: e.target.value } })}
-              className="mt-1 w-full rounded-xl border border-charcoal/10 px-3 py-2 text-sm"
-            />
-          </label>
-          <LocalizedFields
+          <Field
+            label="WhatsApp number (with country code)"
+            value={form.rsvp.whatsappNumber}
+            onChange={(whatsappNumber) => update({ rsvp: { ...form.rsvp, whatsappNumber } })}
+          />
+          <Field
             label="Share message"
             value={form.shareMessage}
             onChange={(shareMessage) => update({ shareMessage })}

@@ -1,18 +1,11 @@
 import { motion } from 'framer-motion'
 import { HeartDivider } from '@/components/ui/HeartDivider'
 import { useCountdown } from '@/hooks/useCountdown'
-import { useLanguage } from '@/contexts/LanguageContext'
 import type { InvitationContent } from '@/types/invitation'
 
 export function Countdown({ invitation }: { invitation: InvitationContent }) {
-  const { t, locale } = useLanguage()
   const parts = useCountdown(invitation.eventDate)
-
-  const labels =
-    locale === 'ar'
-      ? ['أيام', 'ساعات', 'دقائق', 'ثوان']
-      : ['DAYS', 'HOURS', 'MINUTES', 'SECONDS']
-
+  const labels = ['DAYS', 'HOURS', 'MINUTES', 'SECONDS']
   const values = [parts.days, parts.hours, parts.minutes, parts.seconds]
 
   return (
@@ -24,7 +17,7 @@ export function Countdown({ invitation }: { invitation: InvitationContent }) {
         transition={{ duration: 0.6 }}
       >
         <h2 className="font-script text-3xl text-charcoal sm:text-4xl">
-          {t(invitation.countdownTitle)}
+          {invitation.countdownTitle}
         </h2>
         <HeartDivider className="my-5" />
 

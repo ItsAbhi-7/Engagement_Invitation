@@ -1,14 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Calendar } from 'lucide-react'
 import { HeartDivider } from '@/components/ui/HeartDivider'
-import { useLanguage } from '@/contexts/LanguageContext'
 import type { InvitationContent } from '@/types/invitation'
 
 const HEART_PATH =
   'M100 155 C100 155 20 105 20 55 C20 30 40 15 65 15 C82 15 95 25 100 40 C105 25 118 15 135 15 C160 15 180 30 180 55 C180 105 100 155 100 155Z'
 
 export function ScratchReveal({ invitation }: { invitation: InvitationContent }) {
-  const { t, locale } = useLanguage()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [revealed, setRevealed] = useState(false)
@@ -57,13 +55,9 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
     ctx.font = 'italic 14px "Cormorant Garamond", serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText(
-      locale === 'ar' ? 'اخدش هنا' : 'Scratch here',
-      rect.width / 2,
-      rect.height / 2,
-    )
+    ctx.fillText('Scratch here', rect.width / 2, rect.height / 2)
     ctx.restore()
-  }, [locale])
+  }, [])
 
   useEffect(() => {
     drawCover()
@@ -143,7 +137,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
     const start = new Date(invitation.eventDate)
     const end = new Date(start.getTime() + 3 * 60 * 60 * 1000)
     const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
-    const title = `${t(invitation.couple.partner1.name)} & ${t(invitation.couple.partner2.name)}`
+    const title = `${invitation.couple.partner1.name} & ${invitation.couple.partner2.name}`
     const ics = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
@@ -151,7 +145,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
       `DTSTART:${fmt(start)}`,
       `DTEND:${fmt(end)}`,
       `SUMMARY:${title}`,
-      `LOCATION:${t(invitation.venue.name)}, ${t(invitation.venue.city)}`,
+      `LOCATION:${invitation.venue.name}, ${invitation.venue.city}`,
       'END:VEVENT',
       'END:VCALENDAR',
     ].join('\n')
@@ -167,7 +161,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
   return (
     <section className="paper-texture px-6 py-14 text-center">
       <h2 className="font-script text-3xl text-charcoal sm:text-4xl">
-        {t(invitation.scratch.title)}
+        {invitation.scratch.title}
       </h2>
       <HeartDivider className="my-5" />
 
@@ -191,7 +185,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
                     margin: 0,
                   }}
                 >
-                  {t(invitation.scratch.dateLabel)}
+                  {invitation.scratch.dateLabel}
                 </p>
                 <p
                   style={{
@@ -201,7 +195,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
                     margin: '4px 0 0',
                   }}
                 >
-                  {t(invitation.scratch.dayLabel)}
+                  {invitation.scratch.dayLabel}
                 </p>
                 <p
                   style={{
@@ -211,7 +205,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
                     margin: 0,
                   }}
                 >
-                  {t(invitation.scratch.timeLabel)}
+                  {invitation.scratch.timeLabel}
                 </p>
               </div>
             </foreignObject>
@@ -237,7 +231,7 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
           className="inline-flex items-center gap-2 rounded-full bg-olive px-5 py-2.5 font-sans text-sm font-medium text-white shadow-md transition hover:bg-olive/90"
         >
           <Calendar size={15} />
-          {locale === 'ar' ? 'حفظ التاريخ' : 'Save the Date'}
+          Save the Date
         </button>
       </div>
     </section>

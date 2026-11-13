@@ -1,45 +1,38 @@
-export type Locale = 'en' | 'ar'
-
-export interface LocalizedString {
-  en: string
-  ar: string
-}
-
 export interface CouplePerson {
-  name: LocalizedString
-  parents: LocalizedString
-  titles: LocalizedString
+  name: string
+  parents: string
+  titles: string
 }
 
 export interface EventItem {
   id: string
-  title: LocalizedString
+  title: string
   datetime: string
-  description?: LocalizedString
+  description?: string
   type: 'ceremony' | 'reception' | 'other'
 }
 
 export interface TimelineItem {
   id: string
-  title: LocalizedString
+  title: string
   datetime: string
-  description: LocalizedString
+  description: string
 }
 
 export interface VenueInfo {
-  name: LocalizedString
-  address: LocalizedString
-  city: LocalizedString
+  name: string
+  address: string
+  city: string
   lat: number
   lng: number
   mapEmbedUrl?: string
 }
 
 export interface ScratchRevealContent {
-  title: LocalizedString
-  dateLabel: LocalizedString
-  dayLabel: LocalizedString
-  timeLabel: LocalizedString
+  title: string
+  dateLabel: string
+  dayLabel: string
+  timeLabel: string
 }
 
 export interface RsvpConfig {
@@ -57,9 +50,9 @@ export interface InvitationContent {
   couple: {
     partner1: CouplePerson
     partner2: CouplePerson
-    tagline: LocalizedString
+    tagline: string
   }
-  welcomeMessage: LocalizedString
+  welcomeMessage: string
   eventDate: string
   events: EventItem[]
   timeline: TimelineItem[]
@@ -68,20 +61,9 @@ export interface InvitationContent {
   musicUrl: string
   musicAutoplay: boolean
   scratch: ScratchRevealContent
-  countdownTitle: LocalizedString
+  countdownTitle: string
   rsvp: RsvpConfig
-  shareMessage: LocalizedString
+  shareMessage: string
   createdAt?: string
   updatedAt?: string
-}
-
-export interface RsvpSubmission {
-  id?: string
-  invitation_id: string
-  guest_name: string
-  guest_count: number
-  attending: boolean
-  message?: string
-  phone?: string
-  created_at?: string
 }

@@ -1,6 +1,6 @@
 # Engagement Invitation
 
-Interactive engagement invitation with gatefold open, curtain reveal, countdown, scratch-to-reveal, maps, music, EN/AR, RSVP and WhatsApp sharing.
+Interactive engagement invitation with gatefold open, curtain reveal, countdown, scratch-to-reveal, maps, music, RSVP and WhatsApp sharing.
 
 ## Quick start
 

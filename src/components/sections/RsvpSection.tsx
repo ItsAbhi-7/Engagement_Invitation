@@ -1,47 +1,33 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MessageCircle, Send } from 'lucide-react'
-import { useLanguage } from '@/contexts/LanguageContext'
 import { buildWhatsAppShareUrl } from '@/lib/share'
 import type { InvitationContent } from '@/types/invitation'
 
 export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
-  const { t, locale } = useLanguage()
   const [name, setName] = useState('')
   const [guests, setGuests] = useState(1)
   const [attending, setAttending] = useState(true)
   const [message, setMessage] = useState('')
-  const [status, setStatus] = useState<'idle' | 'saving' | 'done'>('idle')
+  const [status, setStatus] = useState<'idle' | 'done'>('idle')
 
   if (!invitation.rsvp.enabled) return null
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim()) return
-    setStatus('saving')
 
-    const attendance =
-      locale === 'ar'
-        ? attending
-          ? 'سأحضر'
-          : 'لن أتمكن من الحضور'
-        : attending
-          ? 'I will attend'
-          : 'I cannot attend'
     const text = [
-      `RSVP — ${t(invitation.couple.partner1.name)} & ${t(invitation.couple.partner2.name)}`,
-      `${locale === 'ar' ? 'الاسم' : 'Name'}: ${name}`,
-      `${locale === 'ar' ? 'الحضور' : 'Attendance'}: ${attendance}`,
-      `${locale === 'ar' ? 'عدد الضيوف' : 'Guests'}: ${guests}`,
-      message ? `${locale === 'ar' ? 'رسالة' : 'Message'}: ${message}` : '',
+      `RSVP — ${invitation.couple.partner1.name} & ${invitation.couple.partner2.name}`,
+      `Name: ${name}`,
+      `Attendance: ${attending ? 'I will attend' : 'I cannot attend'}`,
+      `Guests: ${guests}`,
+      message ? `Message: ${message}` : '',
     ]
       .filter(Boolean)
       .join('\n')
 
-    window.open(
-      buildWhatsAppShareUrl(invitation.rsvp.whatsappNumber, text, ''),
-      '_blank',
-    )
+    window.open(buildWhatsAppShareUrl(invitation.rsvp.whatsappNumber, text, ''), '_blank')
     setStatus('done')
   }
 
@@ -53,13 +39,9 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
         viewport={{ once: true }}
         className="mx-auto max-w-sm text-center"
       >
-        <h2 className="font-script text-3xl text-charcoal">
-          {locale === 'ar' ? 'تأكيد الحضور' : 'RSVP'}
-        </h2>
+        <h2 className="font-script text-3xl text-charcoal">RSVP</h2>
         <p className="mt-2 font-serif text-sm text-taupe">
-          {locale === 'ar'
-            ? 'نرجو تأكيد حضوركم الكرام'
-            : 'Please let us know if you can join us'}
+          Please let us know if you can join us
         </p>
 
         <form onSubmit={submit} className="mt-6 space-y-3 text-left">
@@ -67,7 +49,7 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder={locale === 'ar' ? 'اسمك' : 'Your name'}
+            placeholder="Your name"
             className="w-full rounded-xl border border-charcoal/10 bg-white/70 px-4 py-3 font-sans text-sm outline-none focus:border-sage"
           />
           <div className="flex gap-2">
@@ -80,7 +62,7 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
                   : 'border-charcoal/10 bg-white/70 text-charcoal'
               }`}
             >
-              {locale === 'ar' ? 'سأحضر' : 'Attending'}
+              Attending
             </button>
             <button
               type="button"
@@ -91,11 +73,11 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
                   : 'border-charcoal/10 bg-white/70 text-charcoal'
               }`}
             >
-              {locale === 'ar' ? 'أعتذر' : 'Decline'}
+              Decline
             </button>
           </div>
           <label className="block font-sans text-xs text-taupe">
-            {locale === 'ar' ? 'عدد الضيوف' : 'Number of guests'}
+            Number of guests
             <input
               type="number"
               min={1}
@@ -108,29 +90,26 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder={locale === 'ar' ? 'رسالة (اختياري)' : 'Message (optional)'}
+            placeholder="Message (optional)"
             rows={3}
             className="w-full resize-none rounded-xl border border-charcoal/10 bg-white/70 px-4 py-3 font-sans text-sm outline-none focus:border-sage"
           />
           <button
             type="submit"
-            disabled={status === 'saving'}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-olive py-3 font-sans text-sm font-medium text-white shadow-md transition hover:bg-olive/90 disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-olive py-3 font-sans text-sm font-medium text-white shadow-md transition hover:bg-olive/90"
           >
             <Send size={15} />
-            {locale === 'ar' ? 'إرسال عبر واتساب' : 'Send via WhatsApp'}
+            Send via WhatsApp
           </button>
           {status === 'done' && (
-            <p className="text-center font-serif text-sm text-sage">
-              {locale === 'ar' ? 'شكراً لتأكيدكم!' : 'Thank you for your RSVP!'}
-            </p>
+            <p className="text-center font-serif text-sm text-sage">Thank you for your RSVP!</p>
           )}
         </form>
 
         <a
           href={buildWhatsAppShareUrl(
             invitation.rsvp.whatsappNumber,
-            t(invitation.shareMessage),
+            invitation.shareMessage,
             typeof window !== 'undefined' ? window.location.href : '',
           )}
           target="_blank"
@@ -138,7 +117,7 @@ export function RsvpSection({ invitation }: { invitation: InvitationContent }) {
           className="mt-4 inline-flex items-center gap-2 font-sans text-xs text-taupe underline-offset-2 hover:underline"
         >
           <MessageCircle size={14} />
-          {locale === 'ar' ? 'مشاركة الدعوة عبر واتساب' : 'Share invitation on WhatsApp'}
+          Share invitation on WhatsApp
         </a>
       </motion.div>
     </section>

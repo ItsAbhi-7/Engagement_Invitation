@@ -70,8 +70,8 @@ export function AdminDashboard() {
               >
                 <div>
                   <p className="font-serif text-base text-charcoal">
-                    {item.couple.partner1.name.en || 'Untitled'} &{' '}
-                    {item.couple.partner2.name.en || 'Couple'}
+                    {item.couple.partner1.name || 'Untitled'} &{' '}
+                    {item.couple.partner2.name || 'Couple'}
                   </p>
                   <p className="font-sans text-xs text-taupe">/i/{item.slug}</p>
                 </div>

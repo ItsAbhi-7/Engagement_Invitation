@@ -3,11 +3,9 @@ import { Heart } from 'lucide-react'
 import { CurtainValance } from '@/components/decor/Curtains'
 import { GardenScene } from '@/components/decor/GardenScene'
 import { HeartDivider } from '@/components/ui/HeartDivider'
-import { useLanguage } from '@/contexts/LanguageContext'
 import type { InvitationContent } from '@/types/invitation'
 
 export function CoupleHero({ invitation }: { invitation: InvitationContent }) {
-  const { t } = useLanguage()
   const { partner1, partner2, tagline } = invitation.couple
 
   return (
@@ -22,28 +20,18 @@ export function CoupleHero({ invitation }: { invitation: InvitationContent }) {
           className="flex flex-col items-center"
         >
           <Heart size={14} className="mb-2 fill-charcoal text-charcoal" />
-          <p className="font-serif text-sm tracking-wide text-taupe sm:text-base">
-            {t(tagline)}
-          </p>
+          <p className="font-serif text-sm tracking-wide text-taupe sm:text-base">{tagline}</p>
           <HeartDivider className="my-4" />
 
-          <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{t(partner1.name)}</h1>
-          <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">
-            {t(partner1.parents)}
-          </p>
-          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">
-            {t(partner1.titles)}
-          </p>
+          <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{partner1.name}</h1>
+          <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">{partner1.parents}</p>
+          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">{partner1.titles}</p>
 
           <span className="my-3 font-script text-3xl text-charcoal/60">&</span>
 
-          <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{t(partner2.name)}</h1>
-          <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">
-            {t(partner2.parents)}
-          </p>
-          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">
-            {t(partner2.titles)}
-          </p>
+          <h1 className="font-script text-5xl text-charcoal sm:text-6xl">{partner2.name}</h1>
+          <p className="mt-2 font-serif text-xs italic text-taupe/80 sm:text-sm">{partner2.parents}</p>
+          <p className="mt-0.5 font-serif text-[11px] text-taupe/70 sm:text-xs">{partner2.titles}</p>
         </motion.div>
       </div>
 

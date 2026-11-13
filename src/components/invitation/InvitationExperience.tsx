@@ -11,8 +11,6 @@ import { ScratchReveal } from '@/components/sections/ScratchReveal'
 import { VenueSection } from '@/components/sections/VenueSection'
 import { RsvpSection } from '@/components/sections/RsvpSection'
 import { MusicToggle } from '@/components/ui/MusicToggle'
-import { LanguageToggle } from '@/components/ui/LanguageToggle'
-import { LanguageProvider, useLanguage } from '@/contexts/LanguageContext'
 import { MusicProvider, useMusic } from '@/contexts/MusicContext'
 import type { InvitationContent } from '@/types/invitation'
 
@@ -20,13 +18,11 @@ type Phase = 'sealed' | 'opening' | 'curtain' | 'content'
 
 function InvitationInner({ invitation }: { invitation: InvitationContent }) {
   const [phase, setPhase] = useState<Phase>('sealed')
-  const { dir } = useLanguage()
   const { play } = useMusic()
 
   const handleOpen = useCallback(() => {
     void play()
     setPhase('opening')
-    // Wait for gatefold panels to finish sliding before curtain stage
     window.setTimeout(() => setPhase('curtain'), 1300)
   }, [play])
 
@@ -34,41 +30,26 @@ function InvitationInner({ invitation }: { invitation: InvitationContent }) {
     setPhase('content')
   }, [])
 
-  const showChrome = phase !== 'sealed'
-
   return (
-    <div className="invite-shell paper-texture" dir={dir}>
-      {/* Floating chrome */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-50 flex items-start justify-between p-3">
-        <div />
+    <div className="invite-shell paper-texture">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-50 flex items-start justify-end p-3">
         <div className="pointer-events-auto">
           <MusicToggle />
         </div>
       </div>
 
-      {showChrome && phase === 'content' && (
-        <div className="pointer-events-none fixed bottom-5 left-0 right-0 z-50 mx-auto flex max-w-[430px] justify-start px-4">
-          <div className="pointer-events-auto">
-            <LanguageToggle />
-          </div>
-        </div>
-      )}
-
-      {/* Envelope */}
       <AnimatePresence>
         {(phase === 'sealed' || phase === 'opening') && (
           <GatefoldEnvelope isOpen={phase === 'opening'} onOpen={handleOpen} />
         )}
       </AnimatePresence>
 
-      {/* Curtain reveal */}
       <CurtainReveal
         invitation={invitation}
         active={phase === 'curtain'}
         onComplete={handleCurtainDone}
       />
 
-      {/* Scrollable invitation content */}
       <AnimatePresence>
         {phase === 'content' && (
           <motion.main
@@ -89,32 +70,20 @@ function InvitationInner({ invitation }: { invitation: InvitationContent }) {
             <VenueSection invitation={invitation} />
             <RsvpSection invitation={invitation} />
             <footer className="pb-20 pt-4 text-center font-serif text-xs text-taupe/50">
-              {tCouple(invitation)} · {new Date(invitation.eventDate).getFullYear()}
+              {invitation.couple.partner1.name} & {invitation.couple.partner2.name} ·{' '}
+              {new Date(invitation.eventDate).getFullYear()}
             </footer>
           </motion.main>
         )}
       </AnimatePresence>
-
-      {/* Language on sealed screen too */}
-      {phase === 'sealed' && (
-        <div className="absolute bottom-5 left-4 z-50">
-          <LanguageToggle />
-        </div>
-      )}
     </div>
   )
 }
 
-function tCouple(invitation: InvitationContent) {
-  return `${invitation.couple.partner1.name.en} & ${invitation.couple.partner2.name.en}`
-}
-
 export function InvitationExperience({ invitation }: { invitation: InvitationContent }) {
   return (
-    <LanguageProvider>
-      <MusicProvider src={invitation.musicUrl} autoplay={false}>
-        <InvitationInner invitation={invitation} />
-      </MusicProvider>
-    </LanguageProvider>
+    <MusicProvider src={invitation.musicUrl} autoplay={false}>
+      <InvitationInner invitation={invitation} />
+    </MusicProvider>
   )
 }
