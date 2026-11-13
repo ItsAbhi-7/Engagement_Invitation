@@ -28,13 +28,6 @@ export const defaultInvitation: InvitationContent = {
       description: 'Join us as we exchange vows',
       type: 'ceremony',
     },
-    {
-      id: 'reception',
-      title: 'Reception',
-      datetime: '2026-12-02T19:30:00',
-      description: 'our presence means a lot...',
-      type: 'reception',
-    },
   ],
   timeline: [
     {
@@ -75,6 +68,7 @@ export const defaultInvitation: InvitationContent = {
     dateLabel: 'December 20, 2026',
     dayLabel: 'Sunday',
     timeLabel: '10:30 AM',
+    presenceNote: 'Your presence means a lot...',
   },
   countdownTitle: 'Counting Down to Forever',
   rsvp: {

@@ -79,6 +79,10 @@ export function normalizeInvitation(raw: unknown): InvitationContent {
       dateLabel: asText(scratch.dateLabel, defaultInvitation.scratch.dateLabel),
       dayLabel: asText(scratch.dayLabel, defaultInvitation.scratch.dayLabel),
       timeLabel: asText(scratch.timeLabel, defaultInvitation.scratch.timeLabel),
+      presenceNote: asText(
+        scratch.presenceNote,
+        defaultInvitation.scratch.presenceNote || 'Your presence means a lot...',
+      ),
     },
     countdownTitle: asText(r.countdownTitle, defaultInvitation.countdownTitle),
     rsvp: {

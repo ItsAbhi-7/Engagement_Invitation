@@ -32,6 +32,8 @@ export interface ScratchRevealContent {
   dateLabel: string
   dayLabel: string
   timeLabel: string
+  /** Shown under the scratch heart */
+  presenceNote?: string
 }
 
 export interface RsvpConfig {

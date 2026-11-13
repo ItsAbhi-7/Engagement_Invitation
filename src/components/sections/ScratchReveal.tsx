@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Calendar } from 'lucide-react'
 import { HeartDivider } from '@/components/ui/HeartDivider'
 import type { InvitationContent } from '@/types/invitation'
 
@@ -133,30 +132,8 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
     last.current = null
   }
 
-  const addToCalendar = () => {
-    const start = new Date(invitation.eventDate)
-    const end = new Date(start.getTime() + 3 * 60 * 60 * 1000)
-    const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
-    const title = `${invitation.couple.partner1.name} & ${invitation.couple.partner2.name}`
-    const ics = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'BEGIN:VEVENT',
-      `DTSTART:${fmt(start)}`,
-      `DTEND:${fmt(end)}`,
-      `SUMMARY:${title}`,
-      `LOCATION:${invitation.venue.name}, ${invitation.venue.city}`,
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\n')
-    const blob = new Blob([ics], { type: 'text/calendar' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = 'invitation.ics'
-    a.click()
-    URL.revokeObjectURL(url)
-  }
+  const presenceNote =
+    invitation.scratch.presenceNote || 'Your presence means a lot...'
 
   return (
     <section className="paper-texture px-6 py-14 text-center">
@@ -224,16 +201,9 @@ export function ScratchReveal({ invitation }: { invitation: InvitationContent })
         )}
       </div>
 
-      <div className="mt-8 flex justify-center gap-3">
-        <button
-          type="button"
-          onClick={addToCalendar}
-          className="inline-flex items-center gap-2 rounded-full bg-olive px-5 py-2.5 font-sans text-sm font-medium text-white shadow-md transition hover:bg-olive/90"
-        >
-          <Calendar size={15} />
-          Save the Date
-        </button>
-      </div>
+      <p className="mt-8 font-serif text-sm italic text-taupe/80 sm:text-base">
+        {presenceNote}
+      </p>
     </section>
   )
 }

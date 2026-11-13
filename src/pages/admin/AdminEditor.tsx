@@ -304,6 +304,11 @@ export function AdminEditor() {
             value={form.scratch.timeLabel}
             onChange={(timeLabel) => update({ scratch: { ...form.scratch, timeLabel } })}
           />
+          <Field
+            label="Note under heart"
+            value={form.scratch.presenceNote || ''}
+            onChange={(presenceNote) => update({ scratch: { ...form.scratch, presenceNote } })}
+          />
         </section>
 
         <section className="space-y-3 rounded-2xl border border-charcoal/10 bg-white p-4">
