@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #f9f5eb;
+  --color-cream-dark: #f0e8d8;
+  --color-parchment: #f5e6d3;
+  --color-sage: #6b7b5e;
+  --color-sage-dark: #5a6a4e;
+  --color-sage-light: #8a9a7a;
+  --color-olive: #4a5d4e;
+  --color-gold: #c4a35a;
+  --color-gold-light: #d4b86a;
+  --color-gold-dark: #a88b3d;
+  --color-charcoal: #3e372f;
+  --color-taupe: #4a4238;
+  --color-blush: #e8c4b0;
+  --color-rose: #d4a090;
+  --font-script: "Great Vibes", cursive;
+  --font-serif: "Playfair Display", "Cormorant Garamond", serif;
+  --font-body: "Cormorant Garamond", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  overflow-x: hidden;
+}
+
+.font-script {
+  font-family: var(--font-script);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Embossed leaf pattern for gatefold */
+.emboss-leaves {
+  background-color: var(--color-sage);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='160' viewBox='0 0 120 160'%3E%3Cg fill='none' stroke='%235a6a4e' stroke-width='1.2' opacity='0.45'%3E%3Cpath d='M30 20c8 12 8 28 0 40-8-12-8-28 0-40z'/%3E%3Cpath d='M30 20v40'/%3E%3Cpath d='M70 50c10 14 10 32 0 46-10-14-10-32 0-46z'/%3E%3Cpath d='M70 50v46'/%3E%3Cpath d='M45 90c7 10 7 24 0 34-7-10-7-24 0-34z'/%3E%3Cpath d='M45 90v34'/%3E%3Cpath d='M90 15c6 9 6 20 0 29-6-9-6-20 0-29z'/%3E%3Cpath d='M90 15v29'/%3E%3Cpath d='M20 110c9 13 9 30 0 43-9-13-9-30 0-43z'/%3E%3Cpath d='M20 110v43'/%3E%3Cpath d='M100 100c8 11 8 26 0 37-8-11-8-26 0-37z'/%3E%3Cpath d='M100 100v37'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 120px 160px;
+}
+
+.paper-texture {
+  background-color: var(--color-cream);
+  background-image:
+    radial-gradient(ellipse at 20% 30%, rgba(200, 180, 140, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(180, 160, 120, 0.06) 0%, transparent 50%);
+}
+
+.text-reflection {
+  position: relative;
+}
+
+.text-reflection::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  opacity: 0.12;
+  transform: scaleY(-0.6) translateY(-10%);
+  filter: blur(0.5px);
+  pointer-events: none;
+  background: linear-gradient(to bottom, currentColor 0%, transparent 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage-light);
+  border-radius: 2px;
+}
+
+.invite-shell {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  position: relative;
+  box-shadow: 0 0 60px rgba(62, 55, 47, 0.15);
+}
+
+@media (min-width: 768px) {
+  body {
+    background: linear-gradient(160deg, #e8e0d0 0%, #d4cbb8 100%);
+  }
+  .invite-shell {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    min-height: 96dvh;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+}
